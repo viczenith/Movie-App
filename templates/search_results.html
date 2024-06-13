@@ -1,0 +1,10 @@
+{% if results %}
+    <ul>
+        {% for movie in results %}
+            <li>{{ movie.title }}</li>
+            <!-- Display other movie information as needed -->
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found</p>
+{% endif %}

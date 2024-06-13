@@ -1,0 +1,8 @@
+<p>{{ review.content }}</p>
+<p>Likes: {{ review.likes.count }}</p>
+{% if request.user not in review.likes.all %}
+    <form action="{% url 'like_review' review_id=review.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Like</button>
+    </form>
+{% endif %}

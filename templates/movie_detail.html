@@ -1,0 +1,71 @@
+<h1>{{ movie.title }}</h1>
+<p>{{ movie.description }}</p>
+<h2>Reviews</h2>
+<ul>
+    {% for review in reviews %}
+        <li>{{ review.user.username }} - {{ review.rating }}</li>
+        <li>{{ review.comment }}</li>
+    {% empty %}
+        <li>No reviews yet.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'add_review' movie.id %}">Add a review</a>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }} - Movie Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Add custom CSS styles here */
+        .rating {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+        }
+        .rating > span {
+            display: inline-block;
+            position: relative;
+            width: 1.1em;
+        }
+        .rating > span:hover:before,
+        .rating > span:hover ~ span:before {
+            content: "\2605";
+            position: absolute;
+            color: gold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{{ movie.title }}</h2>
+                <p>{{ movie.description }}</p>
+                <div class="rating">
+                    {% for i in movie.rating_range %}
+                        {% if i < movie.rating %}
+                            <span>&#9733;</span>
+                        {% else %}
+                            <span>&#9734;</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <hr>
+                <h4>Images</h4>
+                <div class="row">
+                    {% for image in movie.images %}
+                        <div class="col-md-4 mb-3">
+                            <img src="{{ image.url }}" class="img-fluid" alt="Movie Image">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
